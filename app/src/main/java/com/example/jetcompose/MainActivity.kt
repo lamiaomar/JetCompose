@@ -23,7 +23,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetComposeTheme {
-                // A surface container using the 'background' color from the theme
                 MyApp()
             }
         }
@@ -51,10 +50,9 @@ fun OnboardingScreen(onContinueClicked: () -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Welcome to the LAMIA")
+            Text("Welcome to the Basics Codelab!")
             Button(
-                modifier = Modifier
-                    .padding(vertical = 24.dp),
+                modifier = Modifier.padding(vertical = 24.dp),
                 onClick = onContinueClicked
             ) {
                 Text("Continue")
@@ -64,13 +62,22 @@ fun OnboardingScreen(onContinueClicked: () -> Unit) {
 }
 
 @Composable
-private fun Greetings(names: List<String> = List(400) { "$it" } ) {
+private fun Greetings(names: List<String> = List(1000) { "$it" } ) {
     LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
         items(items = names) { name ->
             Greeting(name = name)
         }
     }
 }
+
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Composable
+fun OnboardingPreview() {
+    JetComposeTheme {
+        OnboardingScreen(onContinueClicked = {})
+    }
+}
+
 @Composable
 private fun Greeting(name: String) {
 
@@ -83,7 +90,6 @@ private fun Greeting(name: String) {
             stiffness = Spring.StiffnessLow
         )
     )
-
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
@@ -101,44 +107,14 @@ private fun Greeting(name: String) {
             ) {
                 Text(if (expanded) "Show less" else "Show more")
             }
-
         }
     }
 }
+
 @Preview(showBackground = true, widthDp = 320)
 @Composable
-private fun DefaultPreview() {
+fun DefaultPreview() {
     JetComposeTheme {
-        MyApp()
-    }
-}
-
-@Composable
-fun OnboardingScreen() {
-    // TODO: This state should be hoisted
-    var shouldShowOnboarding by remember { mutableStateOf(true) }
-
-    Surface {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("Welcome to the Basics Codelab!")
-            Button(
-                modifier = Modifier.padding(vertical = 24.dp),
-                onClick = { shouldShowOnboarding = false }
-            ) {
-                Text("Continue")
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, widthDp = 320, heightDp = 320)
-@Composable
-fun OnboardingPreview() {
-    JetComposeTheme {
-        OnboardingScreen(onContinueClicked = {})
+        Greetings()
     }
 }
